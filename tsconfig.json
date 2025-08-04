@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    // "module": "ESNext",
+    "noImplicitAny": true,
+    "outFile": "./js_build/build.js",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  },
+  // define files manually to control load order
+  "files": [
+    // p5.js types; MUST be first
+    "global.d.ts",
+    
+    "src/constants/constants.ts",
+    "src/constants/sample-programs.ts",
+    
+    "src/utils/misc.ts",
+    "src/utils/vector.ts",
+
+    "src/bot-lang/common.ts",
+    "src/bot-lang/scanner.ts",
+    "src/bot-lang/expressions.ts",
+    "src/bot-lang/parser.ts",
+    "src/bot-lang/statements.ts",
+    "src/bot-lang/environment.ts",
+    "src/bot-lang/callable.ts",
+    "src/bot-lang/class.ts",
+    "src/bot-lang/array.ts",
+    "src/bot-lang/interpreter.ts",
+    "src/bot-lang/resolver.ts",
+    "src/bot-lang/importer.ts",
+
+    "src/bot-lang/libraries/math.ts",
+    "src/bot-lang/libraries/turtle.ts",
+
+    "src/bot-lang/BotLang.ts",
+
+    "src/turtle.ts",
+
+    "src/editor/text-editor.ts",
+
+    "src/ui/ui-manager.ts",
+    "src/ui/text-button.ts",
+
+    "src/game-states.ts",
+    "src/main.ts"
+  ]
+}
