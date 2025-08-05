@@ -10,6 +10,9 @@ namespace BotLang {
     /** Parses and runs a string with BotLang code. */
     export async function run(code: string) {
         hadError = false;
+        // clear output from the previous program
+        DevConsole.clear();
+
         BL_Interpreter.init();
         BL_Resolver.init();
 

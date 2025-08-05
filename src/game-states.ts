@@ -69,17 +69,22 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
             render(rt: p5 | p5.Graphics) {
                 rt.background("#ffffff");
                 Turtle.render();
-                if (showUI) {
+                DevConsole.render();
+                if (showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
                     UIManager.render();
                 }
             },
             keyPressed(e: KeyboardEvent) {
-                if (e.key === "e") {
+                if (e.key === "e" && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
                     showUI = !showUI;
                 }
+                DevConsole.keyPressed(e);
             },
             mousePressed(e: MouseEvent) {
-                UIManager.mousePressed();
+                if (showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
+                    UIManager.mousePressed();
+                }
+                DevConsole.mousePressed();
             },
         };
     })()

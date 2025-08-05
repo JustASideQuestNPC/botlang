@@ -56,6 +56,7 @@ const sketch = (p5: p5) => {
         UIManager.init(p5);
         TextEditor.init(p5);
         Turtle.init(p5);
+        DevConsole.init(p5);
 
         // add ui pages
         UIManager.addPage({
@@ -166,9 +167,10 @@ const sketch = (p5: p5) => {
             }
         });
         
-        // BotLang.verboseLogging(CONSTANTS.VERBOSE_LOGGING);
+        BotLang.verboseLogging(CONSTANTS.VERBOSE_LOGGING);
 
-        changeGameState(GameState.TEXT_EDITOR);
+        changeGameState(GameState.GAMEPLAY);
+        DevConsole.setDisplayMode(DevConsole.DisplayMode.FULL);
     };
 
     p5.draw = () => {

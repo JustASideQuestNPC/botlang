@@ -42,6 +42,7 @@
     "src/turtle.ts",
 
     "src/editor/text-editor.ts",
+    "src/editor/console.ts",
 
     "src/ui/ui-manager.ts",
     "src/ui/text-button.ts",
