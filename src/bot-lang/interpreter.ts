@@ -473,7 +473,7 @@ namespace BL_Interpreter {
 
     // prints a value
     async function visitPrintStmt(stmt: BL_Stmts.Print) {
-        console.log(BL_Common.valueToString(await evaluate(stmt.expression)));
+        DevConsole.log(BL_Common.valueToString(await evaluate(stmt.expression)));
     }
 
     // declares and optionally initializes a variable

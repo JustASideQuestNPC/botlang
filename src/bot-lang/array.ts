@@ -22,7 +22,7 @@ class BL_Array extends BL_Class {
                         `${BL_Common.valueToString(length)}).`
                     );
                 }
-                console.warn(
+                DevConsole.warn(
                     '"Array(n)" creates an array of length n, did you mean to use an initializer ' +
                     'list instead?'
                 );

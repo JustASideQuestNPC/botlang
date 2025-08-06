@@ -74,7 +74,7 @@ namespace BotLang {
         }
 
         // lines start at index zero
-        console.error(`Error [line ${line}${where}]: ${message}`);
+        DevConsole.error(`Error [line ${line}${where}]: ${message}`);
         hadError = true;
     }
 }

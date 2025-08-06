@@ -38,8 +38,11 @@ namespace DevConsole {
     // the actual console output
     let output: { type: MessageType, message: string }[];
 
-    // lines displayed onscreen, with newlines applied
-    let displayedLines: { color: string, text: string }[];
+    // lines displayed onscreen when the console is in fullscreen mode, with newlines applied
+    let displayLines: { color: string, text: string }[];
+
+    // single line displayed at the top when the console is in first line mode
+    let firstLine: { color: string, text: string };
 
     // which output types to display
     let showLogs = true;
@@ -47,7 +50,41 @@ namespace DevConsole {
     let showErrors = true;
 
     function updateDisplayedLines() {
+        displayLines = [];
+        for (const line of output) {
+            // skip anything that's been filtered out
+            if (line.type === MessageType.LOG && !showLogs) { continue; }
+            if (line.type === MessageType.WARNING && !showWarnings) { continue; }
+            if (line.type === MessageType.ERROR && !showErrors) { continue; }
 
+            // handle line wrapping
+            for (let i = 0; i < line.message.length; i += maxDisplayLength) {
+                displayLines.push({
+                    color: COLORS[line.type],
+                    text: line.message.slice(i, i + maxDisplayLength)
+                });
+            }
+        }
+
+        // update the first line
+        if (output.length > 0) {
+            const line = output[output.length - 1];
+            if (line.message.length < maxDisplayLength) {
+                firstLine = {
+                    color: COLORS[line.type],
+                    text: line.message
+                };
+            }
+            else {
+                firstLine = {
+                    color: COLORS[line.type],
+                    text: line.message.slice(0, maxDisplayLength - 3) + "..."
+                };
+            }
+        }
+        else {
+            firstLine = null;
+        }
     }
 
     /** Initializes the console. This *must* be called before using any other console functions! */
@@ -70,7 +107,20 @@ namespace DevConsole {
     /** Renders the console onscreen. */
     export function render() {
         if (displayMode === DisplayMode.FIRST_LINE) {
+            p5.push();
 
+            p5.noStroke();
+            p5.fill(BACKGROUND_COLOR);
+            p5.rect(0, 0, p5.width, lineHeight + 2);
+
+            if (firstLine) {
+                p5.textFont("Roboto Mono", TEXT_SIZE);
+                p5.textAlign("left", "top");
+                p5.fill(firstLine.color);
+                p5.text(firstLine.text, 4, 3);
+            }
+
+            p5.pop();
         }
         else if (displayMode === DisplayMode.FULL) {
             p5.background(BACKGROUND_COLOR);
@@ -98,18 +148,30 @@ namespace DevConsole {
             p5.stroke(showLogs ? "#ffffff" : "#a0a0a0");
             p5.rect(138, 5, 41, 24);
 
-            p5.textAlign("left", "center");
-            p5.noStroke();
-            p5.fill("#ffffff");
-            p5.text("Use up/down arrows to scroll.", 187, 18);
+            // p5.textAlign("left", "center");
+            // p5.noStroke();
+            // p5.fill("#ffffff");
+            // p5.text("Use up/down arrows to scroll.", 187, 18);
 
             // render text
             p5.textFont("Roboto Mono", TEXT_SIZE);
             p5.textAlign("left", "top");
             p5.noStroke();
-            for (let y = 0; y < MAX_LINES; ++y) {
 
+            // loop from the bottom so that the console scrolls in the right direction
+            p5.push();
+            p5.translate(0, MAX_LINES * lineHeight);
+            for (let y = displayLines.length - 1;
+                 y >= 0 && y > displayLines.length - MAX_LINES; --y) {
+                
+                const line = displayLines[y];
+
+                p5.fill(line.color);
+                p5.text(line.text, 4, 3);
+
+                p5.translate(0, -lineHeight);
             }
+            p5.pop();
 
             p5.pop();
         }
@@ -118,7 +180,8 @@ namespace DevConsole {
     /** Clears the console. */
     export function clear() {
         output = [];
-        displayedLines = [];
+        displayLines = [];
+        firstLine = null;
     }
 
     /** Prints a log to both this console and the browser console. */

@@ -77,6 +77,24 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
             keyPressed(e: KeyboardEvent) {
                 if (e.key === "e" && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
                     showUI = !showUI;
+                    if (showUI) {
+                        DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
+                    }
+                    else {
+                        DevConsole.setDisplayMode(DevConsole.DisplayMode.NONE);
+                    }
+                }
+                else if (e.key === "`") {
+                    const prevMode = DevConsole.getDisplayMode();
+                    if (prevMode === DevConsole.DisplayMode.NONE) {
+                        DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
+                     }
+                    else if (prevMode === DevConsole.DisplayMode.FIRST_LINE) {
+                        DevConsole.setDisplayMode(DevConsole.DisplayMode.FULL);
+                    }
+                    else {
+                        DevConsole.setDisplayMode(DevConsole.DisplayMode.NONE);
+                    }
                 }
                 DevConsole.keyPressed(e);
             },

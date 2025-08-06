@@ -108,7 +108,7 @@ const sketch = (p5: p5) => {
                     textFont: "Roboto Mono",
                     textSize: 20,
                     callback() {
-                        console.log("Do you really think I've gotten that far yet?");
+                        DevConsole.log("Do you really think I've gotten that far yet?");
                     }
                 }),
                 "load sample": new TextButton({
@@ -169,8 +169,8 @@ const sketch = (p5: p5) => {
         
         BotLang.verboseLogging(CONSTANTS.VERBOSE_LOGGING);
 
-        changeGameState(GameState.GAMEPLAY);
-        DevConsole.setDisplayMode(DevConsole.DisplayMode.FULL);
+        changeGameState(GameState.TEXT_EDITOR);
+        DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
     };
 
     p5.draw = () => {
