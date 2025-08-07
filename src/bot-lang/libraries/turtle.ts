@@ -1,132 +1,164 @@
 /* ----- src/bot-lang/libraries/turtle.ts ----- */
-
-function validateArgs(functionName: string, expected: ("number" | "string" | "boolean")[], 
-                      values: BL_Common.DataTypeUnion[]) {
-    
-    for (let i = 0; i < values.length; ++i) {
-        if (typeof values[i] !== expected[i]) {
-            const expectedTypes = expected.join(", ");
-            const valueString = values.map((i) => BL_Common.valueToString(i)).join(", ");
-            throw new BL_Common.TypeError(
-                `Invalid argument type(s) to ${functionName}: Expected (${expectedTypes}), but ` +
-                `recieved (${valueString}).`
-            );
-        }
-    }
-}
-
-const BL_StdLib_Turtle: BL_Library = {
+const BL_StdLib_Turtle: BL_LibraryDefinition = {
+    name: "Robot",
     functions: {
-        getMoveSpeed() {
-            return Turtle.getMoveSpeed();
-        },
-        setMoveSpeed(speed: number) {
-            validateArgs("setMoveSpeed", ["number"], [speed]);
-            Turtle.setMoveSpeed(speed);
-        },
-        resetAll() {
-            Turtle.resetAll();
-        },
-        goHome() {
-            Turtle.resetPosition();
-        },
-        resetPen() {
-            Turtle.resetPen();
-        },
-        clearCanvas() {
-            Turtle.clearCanvas();
-        },
-        getX() {
-            return Turtle.getPos().x;
-        },
-        getY() {
-            return Turtle.getPos().y;
-        },
-        setPos(x: number, y: number) {
-            validateArgs("setPos", ["number", "number"], [x, y]);
-            Turtle.setPos(x, y);
-        },
-        moveFwd(distance: number) {
-            validateArgs("moveFwd", ["number"], [distance]);
-            Turtle.moveFwd(distance);
-        },
-        getAngle() {
-            Turtle.getAngle();
-        },
-        setAngle(angle: number) {
-            validateArgs("setAngle", ["number"], [angle]);
-            Turtle.setAngle(angle);
-        },
-        rotate(angle: number) {
-            validateArgs("rotate", ["number"], [angle]);
-            Turtle.rotate(angle);
-        },
-        showRobot() {
-            Turtle.show();
-        },
-        hideRobot() {
-            Turtle.hide();
-        },
-        isHidden() {
-            Turtle.isHidden();
-        },
-        penUp() {
-            Turtle.penUp();
-        },
-        penDown() {
-            Turtle.penDown();
-        },
-        setColor(c: number) {
-            // edge case for if you try to use a css color with this function
-            if (typeof c === "string") {
-                throw new BL_Common.TypeError(
-                    `setColor sets the draw color using a number or color constant. To set it ` +
-                    `using a CSS string, use setColorCSS instead.`
-                );
+        getMoveSpeed: {
+            fn() {
+                return Turtle.getMoveSpeed();
             }
-            else if (typeof c !== "number") {
-                throw new BL_Common.TypeError(
-                    `Invalid argument type(s) to setColor: Expected (number), but recieved ` +
-                    `(${BL_Common.valueToString(c)}).`
-                );
+        },
+        setMoveSpeed: {
+            argTypes: ["number"],
+            fn(speed: number) {
+                Turtle.setMoveSpeed(speed);
             }
+        },
+        resetAll: {
+            fn() {
+                Turtle.resetAll();
+            }
+        },
+        goHome: {
+            fn() {
+                Turtle.resetPosition();
+            }
+        },
+        resetPen: {
+            fn() {
+                Turtle.resetPen();
+            }
+        },
+        clearCanvas: {
+            fn() {
+                Turtle.clearCanvas();
+            }
+        },
+        getX: {
+            fn() {
+                return Turtle.getPos().x;
+            }
+        },
+        getY: {
+            fn() {
+                return Turtle.getPos().y;
+            }
+        },
+        setPos: {
+            argTypes: ["number", "number"],
+            fn(x: number, y: number) {
+                Turtle.setPos(x, y);
+            }
+        },
+        moveFwd: {
+            argTypes: ["number"],
+            fn(distance: number) {
+                Turtle.moveFwd(distance);
+            },
+        },
+        getAngle: {
+            fn() {
+                return Turtle.getAngle();
+            }
+        },
+        setAngle: {
+            argTypes: ["number"],
+            fn(angle: number) {
+                Turtle.setAngle(angle);
+            }
+        },
+        rotate: {
+            argTypes: ["number"],
+            fn(angle: number) {
+                Turtle.rotate(angle);
+            }
+        },
+        show: {
+            fn() {
+                Turtle.show();
+            }
+        },
+        hide: {
+            fn() {
+                Turtle.hide();
+            }
+        },
+        isHidden: {
+            fn() {
+                Turtle.isHidden();
+            }
+        },
+        penUp: {
+            fn() {
+                Turtle.penUp();
+            }
+        },
+        penDown: {
+            fn() {
+                Turtle.penDown();
+            }
+        },
+        setColor: {
+            fn(c: number) {
+                // edge case for if you try to use a css color with this function
+                if (typeof c === "string") {
+                    throw new BL_Common.TypeError(
+                        `setColor sets the draw color using a number or color constant. To set ` +
+                        `it using a CSS string, use setColorCSS instead.`
+                    );
+                }
+                else if (typeof c !== "number") {
+                    throw new BL_Common.TypeError(
+                        `Invalid argument type(s) to setColor: Expected (number), but recieved ` +
+                        `(${BL_Common.valueToString(c)}).`
+                    );
+                }
 
-            // colors must be integers
-            if (c % 1 !== 0) {
-                throw new BL_Common.TypeError("Colors must be integer numbers.");
-            }
+                // colors must be integers
+                if (c % 1 !== 0) {
+                    throw new BL_Common.TypeError("Colors must be integer numbers.");
+                }
 
-            Turtle.setColor(c);
+                Turtle.setColor(c);
+            }
         },
-        setColorCSS(c: string) {
-            // edge case for if you try to use a number with this function
-            if (typeof c === "number") {
-                throw new BL_Common.TypeError(
-                    `setColorCSS sets the draw color using a CSS string. To set it using a` +
-                    `number or color constant, use setColor instead.`
-                );
-            }
-            else if (typeof c !== "string") {
-                throw new BL_Common.TypeError(
-                    `Invalid argument type(s) to setColor: Expected (number), but recieved ` +
-                    `(${BL_Common.valueToString(c)}).`
-                );
-            }
+        setColorCSS: {
+            fn(c: string) {
+                // edge case for if you try to use a number with this function
+                if (typeof c === "number") {
+                    throw new BL_Common.TypeError(
+                        `setColorCSS sets the draw color using a CSS string. To set it using a` +
+                        `number or color constant, use setColor instead.`
+                    );
+                }
+                else if (typeof c !== "string") {
+                    throw new BL_Common.TypeError(
+                        `Invalid argument type(s) to setColor: Expected (number), but recieved ` +
+                        `(${BL_Common.valueToString(c)}).`
+                    );
+                }
 
-            Turtle.setColor(c);
+                Turtle.setColor(c);
+            }
         },
-        setLineThickness(thickness: number) {
-            validateArgs("setLineThickness", ["number"], [thickness]);
-            Turtle.setLineThickness(thickness);
+        setLineThickness: {
+            fn(thickness: number) {
+                Turtle.setLineThickness(thickness);
+            }
         },
-        beginPoly() {
-            Turtle.beginPoly();
+        beginPoly: {
+            fn() {
+                Turtle.beginPoly();
+            }
         },
-        endPoly() {
-            Turtle.endPoly();
+        endPoly: {
+            fn() {
+                Turtle.endPoly();
+            }
         },
-        dropVertex() {
-            Turtle.dropVertex();
+        dropVertex: {
+            fn() {
+                Turtle.dropVertex();
+            }
         }
     },
     variables: {

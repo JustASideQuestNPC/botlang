@@ -14,7 +14,6 @@ class BL_StdFunction implements BL_Callable {
     callback: BL_StdFunctionCallback;
 
     constructor(name: string, numArgs: number, callback: BL_StdFunctionCallback) {
-        
         this.name = name;
         this.numArgs = numArgs;
         this.callback = callback;

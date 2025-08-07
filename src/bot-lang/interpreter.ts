@@ -166,7 +166,7 @@ namespace BL_Interpreter {
     // property access
     async function visitGetExpr(expr: BL_Exprs.Get): ExprPromise {
         const object = await evaluate(expr.object);
-        if (object instanceof BL_Instance) {
+        if (object instanceof BL_Instance || object instanceof BL_Library) {
             return object.get(expr.name.lexeme);
         }
         // special case for string length
@@ -277,6 +277,10 @@ namespace BL_Interpreter {
     // property assignment
     async function visitSetExpr(expr: BL_Exprs.Set): ExprPromise {
         const object = await evaluate(expr.object);
+        // edge case for trying to set libraries (which have properties, but are read-only)
+        if (object instanceof BL_Library) {
+            throw new BL_Common.RuntimeError("Library objects. are read-only.")
+        }
         if (!(object instanceof BL_Instance)) {
             throw new BL_Common.RuntimeError("Only classes have properties.");
         }
@@ -579,7 +583,7 @@ namespace BL_Interpreter {
         // add standard libary stuff
         globals.define("Array", new BL_Array("Array", null, {}), true);
     }
-
+    
     /** Interprets a list of statements. */
     export async function interpret(statements: BL_Stmts.Stmt[]) {
         killExecution = false;
@@ -594,6 +598,7 @@ namespace BL_Interpreter {
             }
             // execute block doesn't print the error, just catches it, cleans up some stuff, and
             // re-throws it back up the chain
+            DevConsole.error(e.message);
             console.error(e);
             // dump the current environment chain
             if (BotLang.verboseLogging()) {

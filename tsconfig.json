@@ -32,7 +32,7 @@
     "src/bot-lang/array.ts",
     "src/bot-lang/interpreter.ts",
     "src/bot-lang/resolver.ts",
-    "src/bot-lang/importer.ts",
+    "src/bot-lang/libraries/importer.ts",
 
     "src/bot-lang/libraries/math.ts",
     "src/bot-lang/libraries/turtle.ts",
