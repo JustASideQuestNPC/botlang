@@ -8,10 +8,9 @@ const sketch = (p5: p5) => {
         // environment setup
         const canvas = p5.createCanvas(600, 600);
 
-        // get a second reference to the canvas i just created because p5js is a PERFECT library
-        // with NO FLAWS WHATSOEVER (on a completely unrelated note, i would really like to try
-        // whatever the devs have been smoking lately)
-        const c = document.getElementById(canvas.id());
+        // grab a reference to the container and attach the canvas to it
+        const c = document.getElementById("sketchContainer");
+        canvas.parent("sketchContainer");
         // helps make mouse and keyboard functions only trigger when they should
         c.tabIndex = -1;
         // disable the right-click menu
@@ -52,11 +51,16 @@ const sketch = (p5: p5) => {
             e.preventDefault();
         });
 
+        // store references to the documentation and canvas containers
+        Globals.sketchDiv = c;
+        Globals.docsDiv = document.getElementById("docsContainer");
+
         // initialize everything
         UIManager.init(p5);
         TextEditor.init(p5);
         Turtle.init(p5);
         DevConsole.init(p5);
+        DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
 
         // add ui pages
         UIManager.addPage({
@@ -108,7 +112,7 @@ const sketch = (p5: p5) => {
                     textFont: "Roboto Mono",
                     textSize: 20,
                     callback() {
-                        DevConsole.log("Do you really think I've gotten that far yet?");
+                        changeGameState(GameState.DOCUMENTATION);
                     }
                 }),
                 "load sample": new TextButton({
@@ -168,9 +172,8 @@ const sketch = (p5: p5) => {
         });
         
         BotLang.verboseLogging(CONSTANTS.VERBOSE_LOGGING);
-
+        
         changeGameState(GameState.TEXT_EDITOR);
-        DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
     };
 
     p5.draw = () => {

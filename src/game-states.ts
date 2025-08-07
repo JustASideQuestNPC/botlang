@@ -10,6 +10,11 @@ changeGameState = (newState: GameState) => {
         case GameState.TEXT_EDITOR:
             TextEditor.active = false;
             break;
+        case GameState.DOCUMENTATION:
+            // swap the active div
+            Globals.sketchDiv.style.display = "block";
+            Globals.docsDiv.style.display = "none";
+            break;
     }
     // run code for ENTERING the new state
     switch (newState) {
@@ -20,6 +25,12 @@ changeGameState = (newState: GameState) => {
         case GameState.GAMEPLAY:
             UIManager.setCurrentPage("canvas");
             break;
+        case GameState.DOCUMENTATION:
+            // swap the active div
+            Globals.sketchDiv.style.display = "none";
+            Globals.docsDiv.style.display = "block";
+            break;
+        
     }
     Globals.gameState = newState;
 };
@@ -105,7 +116,13 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
                 DevConsole.mousePressed();
             },
         };
-    })()
+    })(),
+    // this is a dummy game state for use when viewing the docs. the update and render functions
+    // do nothing, but still need to be defined because of how the system is structured
+    [GameState.DOCUMENTATION]: {
+        update() {},
+        render() {}
+    }
 }
 
 /* ----- end of file ----- */

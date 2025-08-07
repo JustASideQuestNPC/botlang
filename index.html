@@ -1,5 +1,5 @@
 <html>
-  <head>
+<head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"
       integrity="sha512-N4kV7GkNv7QR7RX9YF/olywyIgIwNvfEe2nZtfyj73HdjCUkAfOBDbcuJ/cTaN04JKRnw1YG1wnUyNKMsNgg3g=="
       crossorigin="anonymous"
@@ -10,22 +10,146 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer">
     </script>
-    <script type="module" src="js_build/build.js"></script>
+    <script type src="js_build/build.js"></script>
     <link rel="shortcut icon" href="https://p5js.org/assets/img/favicon.ico" />
     <link rel="icon" href="https://p5js.org/assets/img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500&family=Roboto+Mono&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 
     <style>
-      * {
-        padding: 0px;
-        margin: 0px;
-        background-color: #ffffff;
-      }
+        * {
+            padding: 0px;
+            margin: 0px;
+            background-color: #ffffff;
+        }
+
+        :root {
+            /**
+             * color palette - these have to use letters instead of numbers because oh noes thinks
+             * that css properties can't have numbers in their names (he's delusional, they can
+             * totally have numbers). i am unreasonably infuriated by this.
+             */
+            --base:    #282c34;
+            --mono-a:  #abb2bf;
+            --mono-b:  #818896;
+            --mono-c:  #5c6370;
+            --hue-a:   #56b6c2;
+            --hue-b:   #61aeee;
+            --hue-c:   #c678dd;
+            --hue-d:   #98c379;
+            --hue-e:   #e06c75;
+            --hue-e-a: #be5046;
+            --hue-f:   #d19a66;
+            --hue-f-a: #e6c07b;
+        }
+
+        .body {
+            width: 600px;
+            height: 600px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .sketch-container {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .docs-container {
+            padding: 5px;
+            background-color: var(--mono-a);
+            width: 100%;
+            font-family: 'Roboto Flex', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--base);
+        }
+
+        /* The side navigation menu */
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: var(--base);
+            overflow: hidden;
+            padding-top: 10px;
+            transition: 0.3s;
+        }
+
+        /* side menu links */
+        .side-menu a {
+            padding: 5px 5px 5px 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            color: var(--mono-b);
+            display: block;
+            transition: 0.3s;
+            background-color: var(--base);
+            white-space: nowrap;
+        }
+        .side-menu a:hover {
+            color: #ffffff;
+        }
+
+        /* button to open and close the side menu */
+        .side-menu-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 1.2rem;
+            background-color: var(--base);
+            /* transition: 0.3s; */
+            color: var(--mono-b);
+            border: none;
+            height: 26px;
+            width: 60px;
+            padding-left: 5px;
+            padding-bottom: 16px;
+            border-radius: 0 0 0 13px;
+        }
+        .side-menu-button:hover {
+            color: #ffffff;
+        }
+
     </style>
     <script></script>
-  </head>
-
-  <body></body>
+</head>
+<body>
+<div class="body">
+    <div id="sketchContainer" class="sketch-container"></div>
+    <div id="docsContainer" class="docs-container" style="display:none">
+        <button id="sideMenuButton" onclick="toggleNav()" class="side-menu-button">Menu</button>
+        <div id="sideMenu" class="side-menu">
+            <a href="#" onclick="changeGameState(0);">Return to Editor</a>
+            <a href="#">Botlang Core</a>
+            <a href="#">Turtle</a>
+            <a href="#">Math</a>
+        </div>
+    </div>
+</div>
+<script>
+    var sideNavOpen = false;
+    var sideMenu =  document.getElementById("sideMenu");
+    // const sideMenuButton = document.getElementById("sideMenuButton");
+    function toggleNav() {
+        if (sideNavOpen) {
+            sideMenu.style.width = "0px";
+            // also move the button
+            // sideMenuButton.style.marginLeft = "0px";
+            // sideMenuButton.textContent = ">";
+        }
+        else {
+            sideMenu.style.width = "135px";
+            // also move the button
+            // sideMenuButton.style.marginLeft = "135px";
+            // sideMenuButton.textContent = "<";
+        }
+        sideNavOpen = !sideNavOpen;
+    }
+</script>
+</body>
 </html>
