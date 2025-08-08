@@ -239,7 +239,7 @@ namespace BL_Scanner {
                 }
                 break;
             case "%":
-                if (match("=")) {
+                if (match("%")) {
                     addToken(BL_Common.TokenType.DOUBLE_MOD);
                 }
                 else {
