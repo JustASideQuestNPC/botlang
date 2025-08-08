@@ -144,11 +144,6 @@ namespace BL_Scanner {
     function scanToken() {
         const c = advance();
         switch (c) {
-            // for a comment, consume everything until we hit the end of the line
-            case "#":
-                while (peek() !== "\n" && !isAtEnd()) { advance(); }
-                break;
-
             // ignore whitespace
             case " ": case "\r": case "\t": break;
             case "\n": ++line; break;
@@ -185,6 +180,10 @@ namespace BL_Scanner {
             case "/": 
                 if (match("=")) {
                     addToken(BL_Common.TokenType.SLASH_EQUAL);
+                }
+                // for a comment, consume everything until we hit the end of the line
+                else if (match("/")) {
+                    while (peek() !== "\n" && !isAtEnd()) { advance(); }
                 }
                 else {
                     addToken(BL_Common.TokenType.SLASH);

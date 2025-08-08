@@ -8,9 +8,9 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         "}"
     ),
     "berry.bl": (
-        `# This demo program draws a COMPLETELY ORIGINAL\n` +
-        `# piece of pixel art that was ABSOLUTELY NOT taken\n` +
-        `# from one of NPC's favorite games.\n` +
+        `// This demo program draws a COMPLETELY ORIGINAL\n` +
+        `// piece of pixel art that was ABSOLUTELY NOT taken\n` +
+        `// from one of NPC's favorite games.\n` +
         `\n` +
         `Robot.setMoveSpeed(1000);\n` +
         `\n` +
@@ -31,14 +31,14 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `  "    ##    "\n` +
         `];\n` +
         `\n` +
-        `# colors:\n` +
-        `# '#': black\n` +
-        `# 'g': light green\n` +
-        `# 'G': dark green\n` +
-        `# 'p': light purple/magenta\n` +
-        `# 'P': purple\n` +
-        `# 'r': light red\n` +
-        `# 'R': red\n` +
+        `// colors:\n` +
+        `// '#': black\n` +
+        `// 'g': light green\n` +
+        `// 'G': dark green\n` +
+        `// 'p': light purple/magenta\n` +
+        `// 'P': purple\n` +
+        `// 'r': light red\n` +
+        `// 'R': red\n` +
         `function findColor(char) {\n` +
         `  if (char == "#") {\n` +
         `    Robot.setColorCSS("#000000");\n` +
@@ -90,10 +90,10 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `    Robot.penUp();\n` +
         `    Robot.moveFwd(PIXEL_SIZE);\n` +
         `    Robot.penDown();\n` +
-        `    # Robot.setMoveSpeed(getMoveSpeed() + 15);\n` +
+        `    // Robot.setMoveSpeed(getMoveSpeed() + 15);\n` +
         `  }\n` +
         `\n` +
-        `  # i could just teleport, but this is cooler\n` +
+        `  // i could just teleport, but this is cooler\n` +
         `  Robot.penUp();\n` +
         `  Robot.rotate(90);\n` +
         `  Robot.moveFwd(PIXEL_SIZE);\n` +
