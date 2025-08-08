@@ -12,7 +12,7 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `# piece of pixel art that was ABSOLUTELY NOT taken\n` +
         `# from one of NPC's favorite games.\n` +
         `\n` +
-        `setMoveSpeed(1000);\n` +
+        `Robot.setMoveSpeed(1000);\n` +
         `\n` +
         `var PIXEL_SIZE = 25;\n` +
         `var PIXELS = [\n` +
@@ -41,25 +41,25 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `# 'R': red\n` +
         `function findColor(char) {\n` +
         `  if (char == "#") {\n` +
-        `    setColorCSS("#000000");\n` +
+        `    Robot.setColorCSS("#000000");\n` +
         `  }\n` +
         `  else if (char == "g") {\n` +
-        `    setColorCSS("#6abe30");\n` +
+        `    Robot.setColorCSS("#6abe30");\n` +
         `  }\n` +
         `  else if (char == "G") {\n` +
-        `    setColorCSS("#37946e");\n` +
+        `    Robot.setColorCSS("#37946e");\n` +
         `  }\n` +
         `  else if (char == "p") {\n` +
-        `    setColorCSS("#800f36");\n` +
+        `    Robot.setColorCSS("#800f36");\n` +
         `  }\n` +
         `  else if (char == "P") {\n` +
-        `    setColorCSS("#491675");\n` +
+        `    Robot.setColorCSS("#491675");\n` +
         `  }\n` +
         `  else if (char == "r") {\n` +
-        `    setColorCSS("#ff5f42");\n` +
+        `    Robot.setColorCSS("#ff5f42");\n` +
         `  }\n` +
         `  else if (char == "R") {\n` +
-        `    setColorCSS("#de2a2a");\n` +
+        `    Robot.setColorCSS("#de2a2a");\n` +
         `  }\n` +
         `  else {\n` +
         `    print("Could not find color for character '" + char + "'");\n` +
@@ -67,18 +67,18 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `}\n` +
         `\n` +
         `function square() {\n` +
-        `  setAngle(90);\n` +
-        `  beginPoly();\n` +
+        `  Robot.setAngle(90);\n` +
+        `  Robot.beginPoly();\n` +
         `  for (var i = 0; i < 4; i += 1) {\n` +
-        `    moveFwd(PIXEL_SIZE);\n` +
-        `    dropVertex();\n` +
-        `    rotate(90);\n` +
+        `    Robot.moveFwd(PIXEL_SIZE);\n` +
+        `    Robot.dropVertex();\n` +
+        `    Robot.rotate(90);\n` +
         `  }\n` +
-        `  endPoly();\n` +
+        `  Robot.endPoly();\n` +
         `}\n` +
         `\n` +
-        `setAngle(90);\n` +
-        `setPos(PIXEL_SIZE, PIXEL_SIZE);\n` +
+        `Robot.setAngle(90);\n` +
+        `Robot.setPos(PIXEL_SIZE, PIXEL_SIZE);\n` +
         `\n` +
         `for (var y = 0; y < PIXELS.length; y += 1) {\n` +
         `  var row = PIXELS[y];\n` +
@@ -87,23 +87,23 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `      findColor(row[x]);\n` +
         `      square();\n` +
         `    }\n` +
-        `    penUp();\n` +
-        `    moveFwd(PIXEL_SIZE);\n` +
-        `    penDown();\n` +
-        `    # setMoveSpeed(getMoveSpeed() + 15);\n` +
+        `    Robot.penUp();\n` +
+        `    Robot.moveFwd(PIXEL_SIZE);\n` +
+        `    Robot.penDown();\n` +
+        `    # Robot.setMoveSpeed(getMoveSpeed() + 15);\n` +
         `  }\n` +
         `\n` +
         `  # i could just teleport, but this is cooler\n` +
-        `  penUp();\n` +
-        `  rotate(90);\n` +
-        `  moveFwd(PIXEL_SIZE);\n` +
-        `  rotate(90);\n` +
-        `  moveFwd(row.length * PIXEL_SIZE);\n` +
-        `  rotate(180);\n` +
-        `  penDown();\n` +
+        `  Robot.penUp();\n` +
+        `  Robot.rotate(90);\n` +
+        `  Robot.moveFwd(PIXEL_SIZE);\n` +
+        `  Robot.rotate(90);\n` +
+        `  Robot.moveFwd(row.length * PIXEL_SIZE);\n` +
+        `  Robot.rotate(180);\n` +
+        `  Robot.penDown();\n` +
         `}\n` +
         `\n` +
-        `hideRobot();`
+        `Robot.hide();`
     ),
 }
 

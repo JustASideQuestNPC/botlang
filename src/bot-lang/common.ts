@@ -9,7 +9,7 @@ namespace BL_Common {
 
     /** All data types that can be stored in a variable. */
     export type DataTypeUnion = number | string | boolean | BL_StdFunction | BL_UserFunction |
-                                BL_Class | BL_Instance | null;
+                                BL_Class | BL_Instance | BL_Library | null;
     
     /** All possible tokens. */
     export enum TokenType {
@@ -125,6 +125,20 @@ namespace BL_Common {
             return "nil";
         }
         return value.toString();
+    }
+
+    /** Returns the type of a value as a Botlang-formatted string. */
+    export function typeToString(value: BL_Common.DataTypeUnion): string {
+        if (value instanceof BL_Library) { return "library"; }
+        if (value instanceof BL_Class) { return "class"; }
+        if (value instanceof BL_ArrayInstance) { return "array"; }
+        if (value instanceof BL_Instance) { return "class instance"; }
+        if (value instanceof BL_StdFunction || value instanceof BL_UserFunction) {
+            return "function";
+        }
+        if (value === null) { return "nil"; }
+        // numbers, strings, and booleans map directly to their javascript typenames
+        return typeof value;
     }
 
     /** Represents any error in Botlang code that shouldn't crash the JS environment. */

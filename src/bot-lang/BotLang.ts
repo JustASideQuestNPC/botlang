@@ -37,8 +37,8 @@ namespace BotLang {
         }
 
         BL_Common.verboseLog("Resolution successful, importing standard libraries...");
-        BL_Importer.addLib(BL_StdLib_Math);
-        BL_Importer.addLib(BL_StdLib_Turtle);
+        BL_Interpreter.globals.define("Math", new BL_Library(BL_StdLib_Math), true);
+        BL_Interpreter.globals.define("Robot", new BL_Library(BL_StdLib_Turtle), true);
 
         BL_Common.verboseLog("Imports successful, executing...");
         BL_Common.verboseLog("----------");
