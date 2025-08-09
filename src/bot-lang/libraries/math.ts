@@ -34,10 +34,75 @@ const BL_StdLib_Math: BL_LibraryDefinition = (()=>{
                     return radToDeg(Math.tan(degToRad(n)));
                 }
             },
+            asin: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.sin(degToRad(n)));
+                }
+            },
+            acos: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.cos(degToRad(n)));
+                }
+            },
+            atan: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.tan(degToRad(n)));
+                }
+            },
+            abs: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.abs(n);
+                }
+            },
+            floor: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.floor(n);
+                }
+            },
+            ceil: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.ceil(n);
+                }
+            },
+            round: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.round(n);
+                }
+            },
+            sqrt: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.sqrt(n);
+                }
+            },
+            root: {
+                argTypes: ["number"],
+                fn(n: number, root: number) {
+                    return Math.pow(n, 1 / root);
+                }
+            },
+            random: {
+                fn() {
+                    return Math.random();
+                }
+            }
         },
         variables: {
             PI: Math.PI,
-            E: Math.E
+            TWO_PI: Math.PI * 2,
+            HALF_PI: Math.PI / 2,
+            THREE_HALVES_PI: Math.PI * 3 / 2,
+            E: Math.E,
         }
     } as BL_LibraryDefinition;
 })();
