@@ -11,8 +11,8 @@ namespace BL_Scanner {
         literalValue: BL_Common.DataTypeUnion; // literal value
         line: number; // the line that the token is on; used for error reporting
 
-        constructor(type: BL_Common.TokenType, lexeme: string, literalValue: BL_Common.DataTypeUnion,
-                    line: number,) {
+        constructor(type: BL_Common.TokenType, lexeme: string,
+                    literalValue: BL_Common.DataTypeUnion, line: number) {
             this.type = type;
             this.lexeme = lexeme;
             this.literalValue = literalValue;
@@ -198,14 +198,6 @@ namespace BL_Scanner {
                 }
                 break;
             case "!": 
-                if (match("=")) {
-                    addToken(BL_Common.TokenType.NOT_EQUAL);
-                }
-                else {
-                    addToken(BL_Common.TokenType.NOT);
-                }
-                break;
-            case "!":
                 if (match("=")) {
                     addToken(BL_Common.TokenType.NOT_EQUAL);
                 }

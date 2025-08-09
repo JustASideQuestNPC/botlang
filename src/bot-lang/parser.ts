@@ -215,7 +215,7 @@ namespace BL_Parser {
                 );
             }
             // convert a get expression into a set expression - this allows for chained property
-            // assignment ("a.b.c = d") to work
+            // incrementing ("a.b.c += d") to work
             else if (expr instanceof BL_Exprs.Get) {
                 return new BL_Exprs.Set(
                     expr.object, expr.name, new BL_Exprs.Binary(expr, operator, value)

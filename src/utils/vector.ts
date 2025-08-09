@@ -295,7 +295,7 @@ class Vector2D {
     }
 
     /**
-     * Returns the distance between the vector's coordinates and other vector's coordinates,
+     * Returns the distance between the vector's coordinates and another vector's coordinates,
      * squared. This is faster than `dist()` and can be useful when you don't need the exact
      * distance.
      */
