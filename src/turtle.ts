@@ -273,22 +273,27 @@ namespace Turtle {
         hideSprite = true;
     }
 
-    export function isHidden() {
-        return hideSprite;
-    }
-
     export function penUp() {
-        if (drawingPolygon) { return; }
+        if (drawingPolygon) {
+            DevConsole.warn("Cannot lift the pen while a polygon is being drawn.");
+            return;
+        }
         drawing = false;
     }
 
     export function penDown() {
-        if (drawingPolygon) { return; }
+        if (drawingPolygon) {
+            DevConsole.warn("Cannot lower the pen while a polygon is being drawn.");
+            return;
+        }
         drawing = true;
     }
 
     export function setColor(c: number | string) {
-        if (drawingPolygon) { return; }
+        if (drawingPolygon) {
+            DevConsole.warn("Cannot change colors while a polygon is being drawn.");
+            return;
+        }
 
         // numbers act as indexes in the color array
         if (typeof c === "number") {
@@ -301,13 +306,17 @@ namespace Turtle {
     }
 
     export function setLineThickness(thickness: number) {
+        if (thickness <= 0) {
+            DevConsole.warn(
+                "Setting line thickness to 0 or a negative number prevents lines from being drawn."
+            );
+        }
         lineThickness = thickness;
     }
 
     export function beginPoly() {
         if (!drawing) {
-            console.warn("Attempted to start a polygon while not drawing.");
-            return;
+            throw new BL_Common.RuntimeError("Attempted to start a polygon while not drawing.");
         }
 
         if (drawingPolygon) {
@@ -333,8 +342,7 @@ namespace Turtle {
 
     export function endPoly() {
         if (!drawing) {
-            console.warn("Attempted to end a polygon while not drawing.");
-            return;
+            throw new BL_Common.RuntimeError("Attempted to end a polygon while not drawing.");
         }
 
         if (!drawingPolygon) {

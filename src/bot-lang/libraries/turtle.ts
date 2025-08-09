@@ -82,11 +82,6 @@ const BL_StdLib_Turtle: BL_LibraryDefinition = {
                 Turtle.hide();
             }
         },
-        isHidden: {
-            fn() {
-                Turtle.isHidden();
-            }
-        },
         penUp: {
             fn() {
                 Turtle.penUp();
@@ -174,7 +169,9 @@ const BL_StdLib_Turtle: BL_LibraryDefinition = {
         COLOR_SKY: 8,
         COLOR_BLUE: 9,
         COLOR_PURPLE: 10,
-        COLOR_PINK: 11
+        COLOR_PINK: 11,
+        CANVAS_WIDTH: 600,
+        CANVAS_HEIGHT: 600
     },
 };
 

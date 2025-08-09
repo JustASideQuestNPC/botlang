@@ -1,0 +1,595 @@
+<!DOCTYPE html><html>
+<head>
+    <title>[TCO25] Botlang Docs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <style>
+        :root {
+            /**
+             * Page color palette (which is also my VSCode palette). These have to use letters
+             * instead of numbers because Oh Noes thinks that CSS properties can't have numbers in
+             * their names (he's delusional, they can totally have numbers). I am unreasonably
+             * infuriated by this. Also, ignore the linter warnings here - it's right that these are
+             * non-standard properties, but it's not smart enough to realize that they're variables.
+             */
+            --base:    #282c34;
+            --mono-a:  #abb2bf;
+            --mono-b:  #818896;
+            --mono-c:  #5c6370;
+            --mono-d:  #0e0d21;
+            --hue-a:   #214a50;
+            --hue-b:   #61aeee;
+            --hue-c:   #c678dd;
+            --hue-d:   #98c379;
+            --hue-e:   #e06c75;
+            --hue-e-a: #be5046;
+            --hue-f:   #d19a66;
+            --hue-f-a: #e6c07b;
+        }
+
+        * {
+            padding: 0px;
+            margin: 0px;
+            /* background-color: var(--base); */
+        }
+
+        .body {
+            width: 600px;
+            height: 600px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            padding: 5px;
+            /* width: 100%; */
+            font-family: 'Roboto Flex', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--mono-a);
+            background-color: var(--base);
+            overflow: scroll;
+        }
+
+        .body h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--hue-b);
+            margin-top: 45px;
+        }
+
+        .body h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--hue-b);
+            margin-top: 30px;
+        }
+
+        .body h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--hue-c);
+            margin-top: 20px;
+        }
+
+        .body h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--hue-b);
+        }
+
+        .body ul {
+            list-style-type: square;
+            list-style-position: outside;
+        }
+
+        .body li {
+            margin-left: 15px;
+        }
+
+        /* inline code */
+        .body code {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+        }
+
+        /* inline code again, but excluded from <pre> blocks so it doesn't mess with hljs */
+        code:not(pre) {
+            color: var(--hue-d);
+            /* background-color: var(--mono-d);
+            padding: 0px 5px 2px;
+            border-radius: 5px; */
+        }
+
+        /* emphasis types for different note types */
+        .note {
+            font-weight: 500;
+            color: var(--hue-b);
+        }
+
+        .warning {
+            font-weight: 500;
+            color: var(--hue-f);
+        }
+
+        .error {
+            font-weight: 500;
+            color: var(--hue-e);
+        }
+
+        /* The side navigation menu */
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: var(--mono-d);
+            overflow: hidden;
+            padding-top: 10px;
+            transition: 0.3s;
+        }
+
+        /* side menu links */
+        .side-menu a {
+            padding: 5px 5px 5px 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            color: var(--mono-b);
+            display: block;
+            transition: 0.3s;
+            background-color: transparent;
+            white-space: nowrap;
+        }
+        .side-menu a:hover {
+            color: #ffffff;
+        }
+
+        /* button to open and close the side menu */
+        .side-menu-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 1.2rem;
+            background-color: var(--mono-d);
+            /* transition: 0.3s; */
+            color: var(--mono-b);
+            border: none;
+            height: 26px;
+            width: 60px;
+            padding-left: 5px;
+            padding-bottom: 16px;
+            border-radius: 0 0 0 13px;
+        }
+        .side-menu-button:hover {
+            color: #ffffff;
+        }
+
+        .hljs {
+            margin: 10px 5px;
+            width: calc(100% - 45px);
+            background-color: var(--mono-d);
+            border-radius: 10px;
+        }
+    </style>
+    <script></script>
+</head>
+<body><div class="body">
+    <!-- sidebar navigator -->
+    <button id="sideMenuButton" onclick="toggleNav()" class="side-menu-button">Menu</button>
+    <div id="sideMenu" class="side-menu">
+        <!-- <a href="#" onclick="changeGameState(0);">Return to Editor</a> -->
+        <a href="#botlang-core">Botlang Core</a>
+        <a href="#turtle">Robot</a>
+        <a href="#math">Math</a>
+    </div>
+
+    <!-- botlang core -->
+<h1 id="botlang-core" style="margin-top: 0;">Botlang Core</h1>
+Botlang's syntax is generally similar to Javascript, so it should be relatively easy to pick up if you're familiar with the latter. If something isn't covered in this section, you can assume that it behaves the same as in JS (if it doesn't, go bug NPC about it).
+
+<h3>Basics</h3>
+<ul>
+    <li>Semicolons are required at the end of all statements.</li>
+    <li>All variables are declared using <code>var</code>.</li>
+    <li>There are no multiline comments.</li>
+    <li>To print something to the console, use <code>print foo;</code>. Semicolons are not required.</li>
+</ul>
+
+<h3>Data and Operators</h3>
+<p>There are several changes to data and operators in Botlang:</p>
+<ul>
+    <li><code>null</code> is replaced with <code>nil</code>.</li>
+    <li>Strings can be declared using single quotes (<code>&#39;str&#39;</code>) or double quotes (<code>&quot;str&quot;</code>). Like in JS, they can be added together using <code>+</code>, have a <code>.length</code> property, and can be indexed (<code>str[0]</code>).</li>
+    <li><code>&amp;&amp;</code> and <code>||</code> are replaced with <code>and</code> and <code>or</code>.</li>
+    <li>There is no <code>++</code> or <code>--</code>. Use <code>+=</code> and <code>-=</code> instead.</li>
+    <li>In addition to the standard operators, there are two new ones:<ul>
+        <li>The <code>^</code> operator raises a number to some power. <code>3 ^ 2</code> returns 3 squared (<span class="note">9</span>), <code>3 ^ 3</code> returns 3 cubed (<span class="note">27</span>), and so on.</li>
+        <li>The <code>%%</code> operator behaves like the <code>%</code> operator, but always returns a positive value. For example, <code>-13 % 64</code> will return <span class="note">-13</span>, whereas <code>-13 %% 64</code> will return <span class="note">51</span>.</li>
+    </ul></li>
+</ul>
+
+<h3>Functions</h3>
+<p>Like in JS, functions are declared using <code>function</code>:</p>
+<pre><code class="language-ts">function foo() {
+    print &quot;foo&quot;;
+    return &quot;bar&quot;;
+}
+
+var bar = foo();
+</code></pre>
+<p>Any function that does not return a value using <code>return</code> will automatically return <code>nil</code>. Botlang does not support anonymous functions (<code>var foo = function() {};</code>).</p>
+
+<h3>Control Flow</h3>
+<p>Loops and conditionals in Botlang are also the same as in JS:</p>
+<pre><code class="language-ts">if (foo &gt; 0) {
+    bar();
+}
+else if (foo &lt; 0) {
+    fizz();
+}
+else {
+    buzz():
+}
+
+for (var i = 0; i &lt; 10; i += 1) {
+    bar();
+}
+
+while (foo) {
+    bar();
+}
+</code></pre>
+<p>Loops and conditionals <span class="note">do not</span> have to be followed by a block:</p>
+<pre><code class="language-ts">if (foo &gt; 0) bar();
+else if (foo &lt; 0) fizz();
+else buzz();
+
+for (var i = 0; i &lt; 10; i += 1) bar();
+while (foo) bar();
+</code></pre>
+
+<h3>Arrays</h3>
+<p>Arrays can declared using an initializer list. They can also be created using <code>Array(n)</code>, which will return an array of length <code>n</code> where all elements are <code>nil</code>:</p>
+<pre><code class="language-ts">var foo = [1, 2, 3, 4];
+var bar = Array(4); // [nil, nil, nil, nil]
+</code></pre>
+<p>Arrays can be indexed using square brackets. <span class="note">Negative values index from the back.</span> They have a <code>.length</code> property and the <code>push</code>, <code>pop</code>, <code>shift</code>, and <code>unshift</code> methods, which behave the same as in JS:</p>
+<pre><code class="language-ts">var foo = [&quot;a&quot;, &quot;b&quot;];
+var bar = foo.length; // bar = 2
+bar = foo[0]; // bar = &quot;a&quot;;
+bar = foo[-1]; // bar = &quot;b&quot;;
+bar = foo.push(&quot;c&quot;); // bar = 3, foo = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+bar = foo.pop(); // bar = &quot;buzz&quot;, foo = [&quot;a&quot;, &quot;b&quot;]
+bar = foo.unshift(&quot;c&quot;); // bar = 3, foo = [&quot;c&quot;, &quot;a&quot;, &quot;b&quot;]
+bar = foo.shift(); // bar = &quot;c&quot;, foo = [&quot;a&quot;, &quot;b&quot;]
+</code></pre>
+
+<h3>Classes</h3>
+<p>To define a class, use <code>class Foo {}</code> and place any methods inside the block. Other properties do not need to be part of the class definition, and can be created within methods at will.</p>
+<pre><code class="language-ts">class Foo {
+    foo() {
+        print &quot;foo&quot;;
+    }
+    bar(x) {
+        this.bar = x;
+    }
+}
+</code></pre>
+<p><span class="note">Note:</span> All classes have the <code>hasProperty</code> method. It takes a string and returns whether the class has a property or method with that name.</p><br>
+<p>To create instances of a class, call the name of the class like a function. Do not use <code>new</code>:</p>
+<pre><code class="language-ts">var foo = Foo();
+foo.foo();
+foo.bar(1);
+</code></pre>
+<p>If a class has an <code>init</code> method, it will function as a constructor:</p>
+<pre><code class="language-ts">class Foo {
+    init(x, y) {
+        this.bar = [x, y];
+    }
+}
+
+var foo = Foo(1, 2);
+</code></pre>
+
+
+    <!-- turtle -->
+<h1 id="turtle">Robot</h1>
+<p>All functions and constants for controlling the robot are defined on the <code>Robot</code> object.</p>
+
+<h2>Constants</h2>
+<h3 style="margin-top: 0;">Colors</h3>
+<p>The 12 color constants correspond to the 12 preset colors that can be used in <code>Robot.setColor()</code>. They are integers from 0-11, in the following order:</p>
+<ul>
+    <li><code>Robot.COLOR_BLACK = 0</code></li>
+    <li><code>Robot.COLOR_GRAY = 1</code></li>
+    <li><code>Robot.COLOR_WHITE = 2</code></li>
+    <li><code>Robot.COLOR_RED = 3</code></li>
+    <li><code>Robot.COLOR_ORANGE = 4</code></li>
+    <li><code>Robot.COLOR_YELLOW = 5</code></li>
+    <li><code>Robot.COLOR_GREEN = 6</code></li>
+    <li><code>Robot.COLOR_CYAN = 7</code></li>
+    <li><code>Robot.COLOR_SKY = 8</code></li>
+    <li><code>Robot.COLOR_BLUE = 9</code></li>
+    <li><code>Robot.COLOR_PURPLE = 10</code></li>
+    <li><code>Robot.COLOR_PINK = 11</code></li>
+</ul>
+
+<h3>Other</h3>
+<ul>
+    <li><code>Robot.CANVAS_WIDTH = 600</code>: The width of the drawing canvas.</li>
+    <li><code>Robot.CANVAS_HEIGHT = 600</code>: The height of the drawing canvas.</li>
+</ul>
+
+<h2>Functions</h2>
+<h3 style="margin-top: 0;">getMoveSpeed</h3>
+<p>Returns the robot&#39;s current movement speed in pixels per second. The default movement speed is <span class="note">250</span> pixels per second, and can be changed using <code>Robot.setMoveSpeed()</code>.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.getMoveSpeed(): number
+</code></pre>
+
+<h3>setMoveSpeed</h3>
+<p>Sets the robot&#39;s current movement speed in pixels per second. Setting the speed to 0 or a negative number will make the robot move instantly without animating. The default movement speed is  <span class="note">250</span> pixels per second.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setMoveSpeed(number)
+</code></pre>
+
+<h3>resetAll</h3>
+<p>Resets the robot&#39;s position, rotation, color, and line thickness, and clears all drawn shapes. This function is equivalent to calling <code>Robot.goHome()</code>, <code>Robot.resetPen()</code>, <code>Robot.clearCanvas()</code>, an <code>Robot.setMoveSpeed(250)</code> at the same time.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.resetAll()
+</code></pre>
+
+<h3>goHome</h3>
+<p>Resets the robot&#39;s position and rotation angle to their default values. The default position is (300, 300), which is the center of the canvas. The default angle is <span class="note">0</span>, which points straight up.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.goHome()
+</code></pre>
+
+<h3>resetPen</h3>
+<p>Resets the robot&#39;s line thickness and drawing color, and finishes a polygon if one is being drawn. The default line thickness is <span class="note">1</span> pixel. The default drawing color is  <span class="note">solid black</span>, which is equivalent to <code>Robot.COLOR_BLACK</code> or <code>#000000</code>.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.resetPen()
+</code></pre>
+
+<h3>clearCanvas</h3>
+<p>Removes everything that has been drawn so far.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.clearCanvas()
+</code></pre>
+
+<h3>getX</h3>
+<p>Returns the robot&#39;s current x coordinate. The default x coordinate is <span class="note">300</span>, which is the center of the canvas.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.getX(): number
+</code></pre>
+
+<h3>getY</h3>
+<p>Returns the robot&#39;s current y coordinate. The default y coordinate is <span class="note">300</span>, which is the center of the canvas.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.getY(): number
+</code></pre>
+
+<h3>setPos</h3>
+<p>Sets the robot&#39;s current x and y position. The default position is <span class="note">(300, 300)</span>, which is the center of the canvas.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setPos(number, number)
+</code></pre>
+
+<h3>moveFwd</h3>
+<p>Moves the robot forward by some distance (measured in pixels). If the pen is down and a polygon is not being drawn, the robot will draw a line behind it as it moves.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.moveFwd(number)
+</code></pre>
+
+<h3>getAngle</h3>
+<p>Returns the robot&#39;s current rotation angle in degrees. The rotation angle is always between 0 and 360, where 0 points straight up. The robot&#39;s default angle is  <span class="note">0</span>.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.getAngle(): number
+</code></pre>
+
+<h3>setAngle</h3>
+<p>Sets the robot&#39;s current rotation angle in degrees. The default angle is <span class="note">0</span>, which points straight up.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setAngle(number)
+</code></pre>
+
+<h3>rotate</h3>
+<p>Rotates the robot by some angle (measured in degrees). Positive angles rotate clockwise and negative angles rotate counterclockwise.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.rotate(number)
+</code></pre>
+
+<h3>hide</h3>
+<p>Hides the robot&#39;s sprite. This does not affect whether it draws things while moving.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.hide()
+</code></pre>
+
+<h3>show</h3>
+<p>Shows the robot&#39;s sprite. This does not affect whether it draws things while moving.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.show()
+</code></pre>
+
+<h3>penUp</h3>
+<p>Lifts the pen. While the pen is up, the robot does not draw anything while moving. <span class="warning">This function does nothing while a polygon is being drawn.</span></p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.penUp()
+</code></pre>
+
+<h3>penDown</h3>
+<p>Lowers the pen. While the pen is down, the robot draws lines whenever it moves.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.penDown()
+</code></pre>
+
+<h3>setColor</h3>
+<p>Sets the drawing color using one of the 12 color constants. Alternatively, the color can be set using any integer number (numbers &lt; 0 or &gt; 11 will &quot;wrap around&quot; to the start or end of this range). The default drawing color is <span class="note">solid black</span>, which is equivalent to <code>Robot.COLOR_BLACK</code> or <code>#000000</code>. <span class="warning">This function does nothing while a polygon is being drawn.</span></p><br>
+<p>To set the drawing color using a CSS string, use <code>Robot.setColorCSS()</code> instead.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setColor(number)
+</code></pre>
+
+<h3>setColorCSS</h3>
+<p>Sets the drawing color using a CSS string (formatted as <code>#rrggbb</code> or <code>#rrggbbaa</code>). There is no built-in color picker in the editor (yet...), but googling &quot;color picker&quot; will show you one without requiring an external webside. The default drawing color is <span class="note">solid black</span>, which is equivalent to <code>Robot.COLOR_BLACK</code> or <code>#000000</code>.  <span class="warning">This function does nothing while a polygon is being drawn.</span></p><br>
+<p>To set the drawing color using a color constant or number, use <code>Robot.setColor()</code> instead.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setColorCSS(string)
+</code></pre>
+
+<h3>setLineThickness</h3>
+<p>Sets the thickness of drawn lines (this behaves like <code>strokeWeight()</code> in PJS). Setting the stroke weight to 0 or a negative number will cause nothing to be drawn. <span class="warning">This function does nothing while a polygon is being drawn.</span></p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.setLineThickness(number)
+</code></pre>
+
+<h3>beginPoly</h3>
+<p>Starts drawing a filled polygon. While drawing a polygon, the robot will never draw lines while moving forward, and <code>Robot.dropVertex()</code> can be used to add vertices to the polygon. The polygon&#39;s fill color is whatever the current drawing color is set to. <span class="error">This function cannot be used while the pen is up or when a polygon is already being drawn.</span></p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.beginPoly()
+</code></pre>
+
+<h3>endPoly</h3>
+<p>Finishes drawing the current polygon and re-enables line drawing. <span class="error">This function cannot be used when a polygon is not being drawn.</span></p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.endPoly()
+</code></pre>
+
+<h3>dropVertex</h3>
+<p>Adds a vertex to the current polygon, at the robot&#39;s current position. <code>Robot.beginPoly()</code> and <code>Robot.endPoly()</code> also drop a single vertex automatically. <span class="error">This function cannot be used when a polygon is not being drawn.</span></p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Robot.dropVertex()
+</code></pre>
+
+
+    <!-- math -->
+<h1>Math</h1>
+<p>The <code>Math</code> object contains various math functions.</p>
+<h2>Constants</h2>
+<ul>
+    <li><code>Math.PI = 3.14159</code>: The ratio of the circumference of a circle to its diameter.</li>
+    <li><code>Math.TWO_PI = 6.28318</code>: Equivalent to <code>Math.PI * 2</code>.</li>
+    <li><code>Math.HALF_PI = 1.57080</code>: Equivalent to <code>Math.PI / 2</code>.</li>
+    <li><code>Math.THREE_HALVES_PI = 4.712385</code>: Equivalent to <code>Math.PI * 3 / 2</code>.</li>
+    <li><code>Math.E</code>: Euler&#39;s number, the base of natural logarithms.</li>
+</ul>
+
+<h2>Functions</h2>
+<h3>abs</h3>
+<p>Returns the absolute value of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.abs(number): number;
+</code></pre>
+
+<h3>acos</h3>
+<p>Returns the inverse cosine (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.acos(number): number;
+</code></pre>
+
+<h3>asin</h3>
+<p>Returns the inverse sine (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.asin(number): number;
+</code></pre>
+
+<h3>atan</h3>
+<p>Returns the inverse tangent (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.atan(number): number;
+</code></pre>
+
+<h3>ceil</h3>
+<p>Returns the smallest integer greater than or equal to a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.ceil(number): number;
+</code></pre>
+
+<h3>cos</h3>
+<p>Returns the cosine (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.(number): number;
+</code></pre>
+
+<h3>floor</h3>
+<p>Returns the smallest integer less than or equal to a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.floor(number): number;
+</code></pre>
+
+<h3>ln</h3>
+<p>Returns the natural logarithm of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.ln(number): number;
+</code></pre>
+
+<h3>log</h3>
+<p>Returns the base 10 logarithm of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.log(number): number;
+</code></pre>
+
+<h3>random</h3>
+<p>Returns a random number between 0 and 1.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.random(): number;
+</code></pre>
+
+<h3>root</h3>
+<p>Returns the nth root of a number. <code>Math.root(n, 2)</code> returns the square root of n, <code>Math.root(n, 3)</code> returns the cube root of n, and so on. <code>Math.root(n, r)</code> is also equivalent to <code>n ^ (1 / r)</code>.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.root(number, number): number;
+</code></pre>
+
+<h3>round</h3>
+<p>Returns a number rounded to the nearest integer.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.round(number): number;
+</code></pre>
+
+<h3>sin</h3>
+<p>Returns the sine (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.sin(number): number;
+</code></pre>
+
+<h3>sqrt</h3>
+<p>Returns the square root of a number. <code>Math.sqrt(n)</code> is also equivalent to <code>Math.root(n, 2)</code> or <code>n ^ (1 / 2)</code>.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.sqrt(number): number;
+</code></pre>
+
+<h3>tan</h3>
+<p>Returns the tangent (in degrees) of a number.</p>
+<h4>Syntax</h4>
+<pre><code class="language-ts">Math.tangent(number): number;
+</code></pre>
+
+
+<script>
+    var sideNavOpen = false;
+    var sideMenu =  document.getElementById("sideMenu");
+    // const sideMenuButton = document.getElementById("sideMenuButton");
+    function toggleNav() {
+        if (sideNavOpen) {
+            sideMenu.style.width = "0px";
+            // also move the button
+            // sideMenuButton.style.marginLeft = "0px";
+            // sideMenuButton.textContent = ">";
+        }
+        else {
+            sideMenu.style.width = "135px";
+            // also move the button
+            // sideMenuButton.style.marginLeft = "135px";
+            // sideMenuButton.textContent = "<";
+        }
+        sideNavOpen = !sideNavOpen;
+    }
+</script>
+</div></body>
+</html>
