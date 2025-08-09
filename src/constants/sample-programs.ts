@@ -12,7 +12,7 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `// piece of pixel art that was ABSOLUTELY NOT taken\n` +
         `// from one of NPC's favorite games.\n` +
         `\n` +
-        `Robot.setMoveSpeed(1000);\n` +
+        `// Robot.setMoveSpeed(1000);\n` +
         `\n` +
         `var PIXEL_SIZE = 25;\n` +
         `var PIXELS = [\n` +
@@ -90,7 +90,7 @@ const SAMPLE_PROGRAMS: { [key: string]: string } = {
         `    Robot.penUp();\n` +
         `    Robot.moveFwd(PIXEL_SIZE);\n` +
         `    Robot.penDown();\n` +
-        `    // Robot.setMoveSpeed(getMoveSpeed() + 15);\n` +
+        `    Robot.setMoveSpeed(Robot.getMoveSpeed() + 15);\n` +
         `  }\n` +
         `\n` +
         `  // i could just teleport, but this is cooler\n` +

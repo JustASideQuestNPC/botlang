@@ -69,11 +69,10 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
     },
     // this is an IIFE so i can do some logic in it
     [GameState.GAMEPLAY]: (()=>{
-        let showUI = true;
         return {
             update() {
                 Turtle.updateGlide();
-                if (showUI) {
+                if (Globals.showUI) {
                     UIManager.update();
                 }
             },
@@ -81,14 +80,14 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
                 rt.background("#ffffff");
                 Turtle.render();
                 DevConsole.render();
-                if (showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
+                if (Globals.showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
                     UIManager.render();
                 }
             },
             keyPressed(e: KeyboardEvent) {
                 if (e.key === "e" && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
-                    showUI = !showUI;
-                    if (showUI) {
+                    Globals.showUI = !Globals.showUI;
+                    if (Globals.showUI) {
                         DevConsole.setDisplayMode(DevConsole.DisplayMode.FIRST_LINE);
                     }
                     else {
@@ -110,7 +109,7 @@ const GAME_STATE_HANDLERS: { [key in GameState]: IGameStateHandler } = {
                 DevConsole.keyPressed(e);
             },
             mousePressed(e: MouseEvent) {
-                if (showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
+                if (Globals.showUI && DevConsole.getDisplayMode() !== DevConsole.DisplayMode.FULL) {
                     UIManager.mousePressed();
                 }
                 DevConsole.mousePressed();

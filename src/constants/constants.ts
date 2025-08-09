@@ -18,16 +18,18 @@ enum GameState {
 interface IGlobals {
     p5: p5;
     gameState: GameState;
-    sketchDiv: HTMLElement;
-    docsDiv: HTMLElement;
+    // sketchDiv: HTMLElement;
+    // docsDiv: HTMLElement;
+    showUI: boolean;
 }
 
 /** Shared container for global variables. */
 const Globals: IGlobals = {
     p5: null,        // the main sketch instance
     gameState: null, // the current game state
-    sketchDiv: null, // html div containing the p5 canvas
-    docsDiv: null    // html div containing the documentation
+    showUI: true,    // whether to show the UI buttons on the canvas
+    // sketchDiv: null, // html div containing the p5 canvas
+    // docsDiv: null    // html div containing the documentation
 };
 
 // predefine to keep typescript happy

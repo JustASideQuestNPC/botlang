@@ -13,8 +13,12 @@ const sketch = (p5: p5) => {
         const c = document.getElementById(canvas.id());
         // helps make mouse and keyboard functions only trigger when they should
         c.tabIndex = -1;
-        // disable the right-click menu
-        c.addEventListener("contextmenu", (e) => e.preventDefault());
+        // disable the right-click menu unless everything on the canvas is hidden
+        c.addEventListener("contextmenu", (e) => {
+            if (Globals.showUI || DevConsole.getDisplayMode() !== DevConsole.DisplayMode.NONE) {
+                e.preventDefault();
+            }
+        });
         // add input listeners for game states
         c.addEventListener("keydown", (e) => {
             // always let f12 (the console hotkey) pass through
@@ -52,8 +56,8 @@ const sketch = (p5: p5) => {
         });
 
         // store references to the documentation and canvas containers
-        Globals.sketchDiv = c;
-        Globals.docsDiv = document.getElementById("docsContainer");
+        // Globals.sketchDiv = c;
+        // Globals.docsDiv = document.getElementById("docsContainer");
 
         // initialize everything
         UIManager.init(p5);
@@ -116,7 +120,7 @@ const sketch = (p5: p5) => {
                 //     }
                 // }),
                 "load sample": new TextButton({
-                    x: 335, y: 540, width: 160, height: 50,
+                    x: 255, y: 540, width: 160, height: 50,
                     text: "Load Sample",
                     cornerRadius: 6,
                     strokeWeight: 4,
