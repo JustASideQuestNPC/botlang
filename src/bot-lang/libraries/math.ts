@@ -13,11 +13,37 @@ const BL_StdLib_Math: BL_LibraryDefinition = (()=>{
     return {
         name: "Math",
         functions: {
-            sin: {
+            abs: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.abs(n);
+                }
+            },
+            acos: {
                 argTypes: ["number"],
                 fn(n: number) {
                     // native sin() is always in radians
-                    return radToDeg(Math.sin(degToRad(n)));
+                    return radToDeg(Math.acos(degToRad(n)));
+                }
+            },
+            asin: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.asin(degToRad(n)));
+                }
+            },
+            atan: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.atan(degToRad(n)));
+                }
+            },
+            ceil: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.ceil(n);
                 }
             },
             cos: {
@@ -27,62 +53,27 @@ const BL_StdLib_Math: BL_LibraryDefinition = (()=>{
                     return radToDeg(Math.cos(degToRad(n)));
                 }
             },
-            tan: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    // native sin() is always in radians
-                    return radToDeg(Math.tan(degToRad(n)));
-                }
-            },
-            asin: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    // native sin() is always in radians
-                    return radToDeg(Math.sin(degToRad(n)));
-                }
-            },
-            acos: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    // native sin() is always in radians
-                    return radToDeg(Math.cos(degToRad(n)));
-                }
-            },
-            atan: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    // native sin() is always in radians
-                    return radToDeg(Math.tan(degToRad(n)));
-                }
-            },
-            abs: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    return Math.abs(n);
-                }
-            },
             floor: {
                 argTypes: ["number"],
                 fn(n: number) {
                     return Math.floor(n);
                 }
             },
-            ceil: {
+            ln: {
                 argTypes: ["number"],
                 fn(n: number) {
-                    return Math.ceil(n);
+                    return Math.log(n);
                 }
             },
-            round: {
+            log: {
                 argTypes: ["number"],
                 fn(n: number) {
-                    return Math.round(n);
+                    return Math.log10(n);
                 }
             },
-            sqrt: {
-                argTypes: ["number"],
-                fn(n: number) {
-                    return Math.sqrt(n);
+            random: {
+                fn() {
+                    return Math.random();
                 }
             },
             root: {
@@ -91,11 +82,32 @@ const BL_StdLib_Math: BL_LibraryDefinition = (()=>{
                     return Math.pow(n, 1 / root);
                 }
             },
-            random: {
-                fn() {
-                    return Math.random();
+            round: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.round(n);
                 }
-            }
+            },
+            sin: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.sin(degToRad(n)));
+                }
+            },
+            sqrt: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    return Math.sqrt(n);
+                }
+            },
+            tan: {
+                argTypes: ["number"],
+                fn(n: number) {
+                    // native sin() is always in radians
+                    return radToDeg(Math.tan(degToRad(n)));
+                }
+            },
         },
         variables: {
             PI: Math.PI,

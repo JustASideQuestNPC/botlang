@@ -8,9 +8,9 @@ const sketch = (p5: p5) => {
         // environment setup
         const canvas = p5.createCanvas(600, 600);
 
-        // grab a reference to the container and attach the canvas to it
-        const c = document.getElementById("sketchContainer");
-        canvas.parent("sketchContainer");
+        // get a second reference to the canvas i just created, which i need because p5js is a
+        // PERFECT library with NO FLAWS WHATSOEVER
+        const c = document.getElementById(canvas.id());
         // helps make mouse and keyboard functions only trigger when they should
         c.tabIndex = -1;
         // disable the right-click menu

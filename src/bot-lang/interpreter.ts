@@ -356,9 +356,9 @@ namespace BL_Interpreter {
 
     /**
      * Finds the value of a variable, either in the lookup table or in global scope. Currently
-     * disabled because it's not working (instead I've fallen back to the original recursive method
-     * of getting values, which performs slightly worse and has a few edge cases, but works well
-     * enough to use).
+     * disabled because it's not working. Instead I've fallen back to the original recursive method
+     * of getting values, which is a tad slower and has a few edge cases, but works well enough to
+     * use until I get around to fixing.
      */
     function lookupVariable(name: BL_Scanner.Token, expr: BL_Exprs.Expr): BL_Common.DataTypeUnion {
         if (typeof expr.resolutionId === "number") {
