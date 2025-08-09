@@ -140,8 +140,13 @@ namespace TextEditor {
         // this up (DEFINITELY a bad idea)
         editorText[line].splice(pos, 0, charString);
     }
-    /** Returns the character at a certain position. */
+    /**
+     * Returns the character at a certain position. If the position is out of range, returns `""`.
+     */
     function getChar(line: number, pos: number) {
+        if (line < 0 || line >= editorText.length || pos < 0 || pos >= editorText[line].length) {
+            return "";
+        }
         return editorText[line][pos].slice(0, 1);
     }
 
@@ -299,8 +304,19 @@ namespace TextEditor {
                     } while (cursorPos % TAB_SIZE !== 0);
                     break;
                 default:
+                    // prevent duplicate parenthesis
+                    const nextChar = getChar(currentLine, cursorPos);
+                    if ((char === ")" || char === "]" || char === "}" || char === "'" ||
+                         char === '"') && char === nextChar) {
+                        
+                        // only move the cursor forward
+                        setCursorPos(cursorPos + 1);
+                        break;
+                    }
+
                     addChar(char); // adds a character at the cursor with the default color
                     setCursorPos(cursorPos + 1);
+
                     // handle parenthesis autocomplete
                     if (char === "(") {
                         addChar(")");
