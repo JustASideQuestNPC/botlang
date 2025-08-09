@@ -12,7 +12,7 @@ const CONSTANTS = {
 enum GameState {
     TEXT_EDITOR,  // writing code in the editor
     GAMEPLAY,     // running code
-    DOCUMENTATION // dummy game state used when showing the documentation
+    // DOCUMENTATION // dummy game state used when showing the documentation
 }
 
 interface IGlobals {

@@ -99,22 +99,22 @@ const sketch = (p5: p5) => {
                         changeGameState(GameState.GAMEPLAY);
                     }
                 }),
-                "docs": new TextButton({
-                    x: 255, y: 540, width: 70, height: 50,
-                    text: "Docs",
-                    cornerRadius: 6,
-                    strokeWeight: 4,
-                    strokeColor: "#61aeee",
-                    fillColor: "#282c34",
-                    textColor: "#61aeee",
-                    hoverStrokeColor: "#c678dd",
-                    hoverTextColor: "#c678dd",
-                    textFont: "Roboto Mono",
-                    textSize: 20,
-                    callback() {
-                        changeGameState(GameState.DOCUMENTATION);
-                    }
-                }),
+                // "docs": new TextButton({
+                //     x: 255, y: 540, width: 70, height: 50,
+                //     text: "Docs",
+                //     cornerRadius: 6,
+                //     strokeWeight: 4,
+                //     strokeColor: "#61aeee",
+                //     fillColor: "#282c34",
+                //     textColor: "#61aeee",
+                //     hoverStrokeColor: "#c678dd",
+                //     hoverTextColor: "#c678dd",
+                //     textFont: "Roboto Mono",
+                //     textSize: 20,
+                //     callback() {
+                //         changeGameState(GameState.DOCUMENTATION);
+                //     }
+                // }),
                 "load sample": new TextButton({
                     x: 335, y: 540, width: 160, height: 50,
                     text: "Load Sample",
