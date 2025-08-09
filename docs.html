@@ -1,18 +1,21 @@
 <!DOCTYPE html><html>
 <!--
- This program has the full documentation for Botlang, my entry for part 3 of TCO25. The documentation is in a separate program due to KA-specific issues. You can find Botlang itself at [LINK GOES HERE].
+This program has the full documentation for Botlang, my entry for part 3 of TCO25. The documentation is in a separate program due to KA-specific issues. You can find Botlang itself at [LINK GOES HERE].
 
- A note on text colors:
- BLUE text is a note. Notes are just good to know about.
- YELLOW text is a warning. Warnings are things that won't break your program, but you probably shouldn't do them either.
- RED text is an error. Errors are things that will not hesitate to crash your program if you do them.
- -->
+A note on text colors:
+BLUE text is a note. Notes are just good to know about.
+YELLOW text is a warning. Warnings are things that won't break your program, but you probably shouldn't do them either.
+RED text is an error. Errors are things that will not hesitate to crash your program if you do them.
+
+JUDGES: I wrote all of the documentation in Markdown and then used an online converter to turn it into HTML (this is why there are so many special character codes). This isn't AI but I figured I should mention it anyway. Also, this is just a straight webpage so the code is pretty boring.
+-->
 <head>
     <title>[TCO25] Botlang Docs</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
+    <!-- i'm genuinely surprised that ka apparently lets me pull down whatever packages i want to -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
@@ -20,11 +23,7 @@
     <style>
         :root {
             /**
-             * Page color palette (which is also my VSCode palette). These have to use letters
-             * instead of numbers because Oh Noes thinks that CSS properties can't have numbers in
-             * their names (he's delusional, they can totally have numbers). I am unreasonably
-             * infuriated by this. Also, ignore the linter warnings here - it's right that these are
-             * non-standard properties, but it's not smart enough to realize that they're variables.
+             * Page color palette (which is also my VSCode palette). These have to use letters instead of numbers because Oh Noes thinks that CSS properties can't have numbers in their names (he's delusional, they can totally have numbers). I am unreasonably infuriated by this. Also, ignore the linter warnings here - it's right that these are non-standard properties, it's just not smart enough to realize that they're actually variables.
              */
             --base:    #282c34;
             --mono-a:  #abb2bf;
